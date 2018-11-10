@@ -4,6 +4,11 @@ export default function main(state = getInitialState(), action) {
             return Object.assign({}, state, {currentView: action.payload});
         case 'SET_LAYOUT':
             return Object.assign({}, state, {layout: action.payload});
+        case 'ADD_REPORT':
+            let newState = JSON.parse(JSON.stringify(state));
+            newState.layout[0].reports.forEach(v => v.width = '*');
+            newState.layout[0].reports.push({id: 1, name: action.payload, width: '*'});
+            return newState;
         default:
             return state;
     }

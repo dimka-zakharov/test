@@ -78,6 +78,9 @@ class Main extends Component {
     }
 
     mouseUp(event) {
+        if (this.dragInfo === null) {
+            return false;
+        }
         if (this.dragInfo.report) {
             //todo this.moveReport(event.clientX, event.clientY);
         } else if (this.dragInfo.cell !== undefined) {

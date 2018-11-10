@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../App.css';
 import {connect} from 'react-redux';
 import {setCurrentView} from '../actions/main';
+import DropDownButton from './DropDownButton';
 
 class Header extends Component {
     render() {
@@ -20,6 +21,7 @@ class Header extends Component {
                     <option value="3">Delta - Theta</option>
                     <option value="new">+ Create new view</option>
                 </select>
+                <DropDownButton/>
             </header>
         );
     }
