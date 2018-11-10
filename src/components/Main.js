@@ -23,7 +23,7 @@ class Main extends Component {
             if (i > 0) {
                 rows.push(<RowResizeBar row={i-1} key={-i}/>);
             }
-            rows.push(<Row row={v} rowIndex={i} key={i} total={this.props.layout.length}/>)
+            rows.push(<Row row={v} rowIndex={i} key={v.reports[0].id} total={this.props.layout.length}/>)
         });
         if (this.state.dragRect !== null) {
             let rect = this.state.dragRect;
