@@ -7,13 +7,14 @@
     flex-direction: row;
     font-size: 0.8em;
     height: 30px;
+    padding-top: 2px;
 }
 
 .app-main {
     height: calc(100vh - 40px);
     position: relative;
     overflow: hidden;
-    margin: 10px 0 0 10px;
+    margin: 5px 0 0 10px;
 }
 
 .resize-rect {
@@ -47,7 +48,6 @@
 .app-row {
     box-sizing: border-box;
     display: flex;
-    transition: all 0.15s linear;
 }
 
 .app-row-resize-bar {
@@ -61,6 +61,9 @@
     background-color: #eee;
     padding: 2px 0 0 8px;
     font-weight: 600;
+}
+
+.app-transition {
     transition: all 0.15s linear;
 }
 

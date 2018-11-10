@@ -9,9 +9,8 @@ import {RESIZE_BAR_SIZE} from "./RowResizeBar";
 class Main extends Component {
     constructor(props) {
         super(props);
-        this.dragInfo = null;
-        this.dragDelta = null;
-        this.state = {dragRect: null};
+        //this.dragDelta = null;
+        this.state = {dragInfo: null, dragRect: null};
         this.mouseDown = this.mouseDown.bind(this);
         this.mouseMove = this.mouseMove.bind(this);
         this.mouseUp = this.mouseUp.bind(this);
@@ -23,7 +22,7 @@ class Main extends Component {
             if (i > 0) {
                 rows.push(<RowResizeBar row={i-1} key={-i}/>);
             }
-            rows.push(<Row row={v} rowIndex={i} key={v.reports[0].id} total={this.props.layout.length}/>)
+            rows.push(<Row row={v} rowIndex={i} animated={this.state.dragInfo===null} key={v.reports[0].id} total={this.props.layout.length}/>)
         });
         if (this.state.dragRect !== null) {
             let rect = this.state.dragRect;
@@ -59,53 +58,59 @@ class Main extends Component {
             }
 
             let value = event.target.attributes['data-position'].value;
-            this.dragInfo = value.indexOf(',') >= 0 ? {row: +value.split(',')[0], cell: +value.split(',')[1]} : {row: +value};
-            this.dragDelta = [event.clientX - this.calculateTotalWidth(this.dragInfo.row+1, this.dragInfo.cell+1), event.clientY - this.calculateTotalHeight(this.dragInfo.row+1)];
+            let dragInfo = value.indexOf(',') >= 0 ? {row: +value.split(',')[0], cell: +value.split(',')[1]} : {row: +value};
+            //this.dragDelta = [event.clientX - this.calculateTotalWidth(this.dragInfo.row+1, this.dragInfo.cell+1), event.clientY - this.calculateTotalHeight(this.dragInfo.row+1)];
+            let dragRect = null;
             if (event.target.attributes['data-is-report']) {
-                this.dragInfo.report = true;
+                dragInfo.report = true;
+                dragRect=this.getDragRect(event);
             }
-            this.setState({dragRect: this.getDragRect(event)});
+            this.setState({dragInfo: dragInfo, dragRect: dragRect});
+        } else {
+            this.setState({dragInfo: null});
         }
         return false;
     }
 
     mouseMove(event) {
-        if (this.dragInfo === null) {
+        if (this.state.dragInfo === null) {
             return false;
         }
-        this.setState({dragRect: this.getDragRect(event)});
-        return true;
-    }
-
-    mouseUp(event) {
-        if (this.dragInfo === null) {
-            return false;
-        }
-        if (this.dragInfo.report) {
-            //todo this.moveReport(event.clientX, event.clientY);
-        } else if (this.dragInfo.cell !== undefined) {
+        if (this.state.dragInfo.report) {
+            //this.setState({dragRect: this.getDragRect(event)});
+            //this.moveReport(event.clientX, event.clientY);
+        } else if (this.state.dragInfo.cell !== undefined) {
             this.resizeCellWidth(event.clientX);
         } else {
             this.resizeRowHeight(event.clientY);
         }
-        this.dragInfo = null;
-        this.setState({dragRect: null});
+        return true;
+    }
+
+    mouseUp(event) {
+        if (this.state.dragInfo === null) {
+            return false;
+        }
+        if (this.state.dragInfo.report) {
+            //todo this.moveReport(event.clientX, event.clientY);
+        }
+        this.setState({dragInfo: null, dragRect: null});
         return false;
     }
 
     getDragRect(event) {
-        if (this.dragInfo.report) {
+        if (this.state.dragInfo.report) {
             //todo this.moveReport(event.clientX, event.clientY);
             return [];
-        } else if (this.dragInfo.cell !== undefined) {
-            let left = this.calculateTotalWidth(this.dragInfo.row, this.dragInfo.cell);
-            let top = this.calculateTotalHeight(this.dragInfo.row);
+        } else if (this.state.dragInfo.cell !== undefined) {
+            let left = this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell);
+            let top = this.calculateTotalHeight(this.state.dragInfo.row);
             let width = Math.max(event.clientX - this.screenLeft - left, 0);
-            let height = this.calculateTotalHeight(this.dragInfo.row + 1) - top - RESIZE_BAR_SIZE - 4;
+            let height = this.calculateTotalHeight(this.state.dragInfo.row + 1) - top - RESIZE_BAR_SIZE - 4;
             return [left, top, width, height];
         } else {
             let left = 0;
-            let top = this.calculateTotalHeight(this.dragInfo.row);
+            let top = this.calculateTotalHeight(this.state.dragInfo.row);
             let width = this.screenWidth - RESIZE_BAR_SIZE - 4;
             let height = Math.max(event.clientY - this.screenTop - top, 0);
             return [left, top, width, height];
@@ -113,8 +118,8 @@ class Main extends Component {
     }
 
     resizeCellWidth(eventX) {
-        let minWidth = this.calculateTotalWidth(this.dragInfo.row, this.dragInfo.cell);
-        let maxWidth = this.calculateTotalWidth(this.dragInfo.row, this.dragInfo.cell + 2);
+        let minWidth = this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell);
+        let maxWidth = this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell + 2);
         let width = eventX - this.screenLeft;
         if (width < minWidth + RESIZE_BAR_SIZE) {
             width = minWidth + RESIZE_BAR_SIZE;
@@ -123,14 +128,14 @@ class Main extends Component {
             width = maxWidth - RESIZE_BAR_SIZE;
         }
         let layout = JSON.parse(JSON.stringify(this.props.layout));
-        layout[this.dragInfo.row].reports[this.dragInfo.cell].width = (width - minWidth) * 100 / this.screenWidth;
-        layout[this.dragInfo.row].reports[this.dragInfo.cell + 1].width = (maxWidth - width) * 100 / this.screenWidth;
+        layout[this.state.dragInfo.row].reports[this.state.dragInfo.cell].width = (width - minWidth) * 100 / this.screenWidth;
+        layout[this.state.dragInfo.row].reports[this.state.dragInfo.cell + 1].width = (maxWidth - width) * 100 / this.screenWidth;
         this.props.setLayout(layout);
     }
 
     resizeRowHeight(eventY) {
-        let minHeight = this.calculateTotalHeight(this.dragInfo.row);
-        let maxHeight = this.calculateTotalHeight(this.dragInfo.row + 2);
+        let minHeight = this.calculateTotalHeight(this.state.dragInfo.row);
+        let maxHeight = this.calculateTotalHeight(this.state.dragInfo.row + 2);
         let height = eventY - this.screenTop;
         if (height < minHeight + RESIZE_BAR_SIZE) {
             height = minHeight + RESIZE_BAR_SIZE;
@@ -140,8 +145,8 @@ class Main extends Component {
         }
 
         let layout = JSON.parse(JSON.stringify(this.props.layout));
-        layout[this.dragInfo.row].height = (height - minHeight) * 100 / this.screenHeight;
-        layout[this.dragInfo.row + 1].height = (maxHeight - height) * 100 / this.screenHeight;
+        layout[this.state.dragInfo.row].height = (height - minHeight) * 100 / this.screenHeight;
+        layout[this.state.dragInfo.row + 1].height = (maxHeight - height) * 100 / this.screenHeight;
         this.props.setLayout(layout);
     }
 
