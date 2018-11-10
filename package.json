@@ -2,6 +2,7 @@
   "name": "test",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://dimka-zakharov.github.io/test/",
   "dependencies": {
     "ag-grid": "^14.1.1",
     "ag-grid-enterprise": "^14.2.0",
@@ -16,6 +17,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "express": "^4.16.4",
+    "gh-pages": "^2.0.1",
     "moment": "^2.19.3",
     "ngx-perfect-scrollbar": "^5.0.0-7",
     "openlayers": "^4.4.2",
@@ -53,7 +55,8 @@
     "start:dev": "webpack-dev-server",
     "build": "webpack",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
