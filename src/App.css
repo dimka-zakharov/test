@@ -18,12 +18,14 @@
 }
 
 .resize-rect {
+    pointer-events: none;
     border: 2px solid blue;
     border-radius: 3px;
     background-color: lightblue;
     position: absolute;
     filter: alpha(opacity=50);
     opacity: 0.5;
+    transition: all 0.02s linear;
 }
 
 .delete-button {
