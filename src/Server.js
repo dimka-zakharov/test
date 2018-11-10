@@ -13,14 +13,21 @@ app.get('/accounts', (request, response) => {
 
 app.get('/layout', (request, response) => {
     response.send([
-        [
-            {id: 1, width: '30%', report: 'report1'},
-            {id: 2, width: '20%', report: 'report2'},
-            {id: 3, width: '50', report: 'report3'}
-        ],
-        [
-            {id: 4, width: '*', report: 'report4'},
-        ]
+        {
+            height: '*',
+            reports:
+                [
+                    {id: 1, width: '30%', report: 'report1'},
+                    {id: 2, width: '20%', report: 'report2'},
+                    {id: 3, width: '50', report: 'report3'}
+                ]
+        },
+        {
+            height: '*',
+            reports: [
+                {id: 4, width: '*', report: 'report4'},
+            ]
+        }
     ]);
 });
 

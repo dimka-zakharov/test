@@ -1,14 +1,82 @@
 .app {
-  text-align: center;
+    text-align: center;
 }
 
 .app-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    display: flex;
+    flex-direction: row;
+    font-size: 0.8em;
+    height: 30px;
 }
+
+.app-main {
+    height: calc(100vh - 40px);
+    position: relative;
+    overflow: hidden;
+    margin: 10px 0 0 10px;
+}
+
+.resize-rect {
+    border: 2px solid blue;
+    border-radius: 3px;
+    background-color: lightblue;
+    position: absolute;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+
+.app-row {
+    box-sizing: border-box;
+    display: flex;
+}
+
+.app-row-resize-bar {
+    height: 10px;
+    width: 100%;
+    padding: 0;
+    cursor: ns-resize;
+}
+
+.app-cell {
+    background-color: #eee;
+    padding: 2px 0 0 8px;
+    font-weight: 600;
+}
+
+.app-cell-resize-bar {
+    width: 10px;
+    height: 100%;
+    cursor: ew-resize;
+}
+
+div {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+select {
+    margin: 5px 5px 5px 2px;
+}
+
+label {
+    margin: 5px 2px 5px 5px;
+}
+
+/*
+.rotate {
+-webkit-transform: rotate(-90deg);
+-moz-transform: rotate(-90deg);
+-ms-transform: rotate(-90deg);
+-o-transform: rotate(-90deg);
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+ */
