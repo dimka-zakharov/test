@@ -19,21 +19,21 @@ class Main extends Component {
 
     render() {
         let rows = [];
+        let cursor = this.state.dragRect === null;
         this.props.layout.forEach((v, i) => {
-            if (i > 0) {
-                rows.push(<RowResizeBar row={i - 1} key={-i}/>);
-            }
-            rows.push(<Row row={v} rowIndex={i} animated={this.state.dragInfo === null} key={v.reports[0].id} total={this.props.layout.length}/>)
+            rows.push(<Row row={v} rowIndex={i} animated={this.state.dragInfo === null} cursor={cursor} dragging={!cursor} key={v.reports[0].id} total={this.props.layout.length}/>)
+            rows.push(<RowResizeBar row={i} cursor={cursor && i !== this.props.layout.length - 1} dragging={!cursor} key={-i - 1}/>);
         });
         if (this.state.dragRect !== null) {
             let rect = this.state.dragRect;
-            rows.push(<div className='resize-rect' style={{left: rect[0], top: rect[1], width: rect[2], height: rect[3]}}/>);
+            rows.push(<div className='drag-rect' style={{left: rect[0], top: rect[1], width: rect[2], height: rect[3]}}/>);
         }
-        return (
+        return ([
+            <RowResizeBar row={-1} key={0} dragging={!cursor}/>,
             <main className="app-main">
                 {rows}
             </main>
-        );
+        ]);
     }
 
     componentDidMount() {
@@ -97,32 +97,11 @@ class Main extends Component {
     }
 
     getDragRect(event) {
-        //resize bars
-        if (event.target.attributes['data-position'] && !event.target.attributes['data-is-report']) {
-            let value = event.target.attributes['data-position'].value;
-            let info = value.indexOf(',') >= 0 ? {row: +value.split(',')[0], cell: +value.split(',')[1]} : {row: +value};
-            if (info.cell === undefined) {
-                return [
-                    0,
-                    this.calculateTotalHeight(info.row + 1) - RESIZE_BAR_SIZE,
-                    this.screenWidth - RESIZE_BAR_SIZE - 2,
-                    RESIZE_BAR_SIZE - 2
-                ];
-            } else {
-                return [
-                    this.calculateTotalWidth(info.row, info.cell + 1) - RESIZE_BAR_SIZE,
-                    this.calculateTotalHeight(info.row),
-                    RESIZE_BAR_SIZE - 2,
-                    this.calculateTotalHeight(info.row + 1) - this.calculateTotalHeight(info.row) - RESIZE_BAR_SIZE - 2,
-                ];
-            }
-        }
-        //original rectangle
         return [
             event.clientX - this.screenLeft - this.state.dragDelta[0],
             event.clientY - this.screenTop - this.state.dragDelta[1],
-            this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell + 1) - this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell) - RESIZE_BAR_SIZE-2,
-            this.calculateTotalHeight(this.state.dragInfo.row + 1) - this.calculateTotalHeight(this.state.dragInfo.row) - RESIZE_BAR_SIZE-2
+            this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell + 1) - this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell) - RESIZE_BAR_SIZE,
+            this.calculateTotalHeight(this.state.dragInfo.row + 1) - this.calculateTotalHeight(this.state.dragInfo.row) - RESIZE_BAR_SIZE
         ];
     }
 

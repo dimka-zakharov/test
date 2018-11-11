@@ -7,25 +7,20 @@
     flex-direction: row;
     font-size: 0.8em;
     height: 30px;
-    padding-top: 2px;
 }
 
 .app-main {
     height: calc(100vh - 40px);
     position: relative;
     overflow: hidden;
-    margin: 5px 0 0 10px;
 }
 
-.resize-rect {
+.drag-rect {
     pointer-events: none;
-    border: 2px solid blue;
-    border-radius: 3px;
     background-color: lightblue;
     position: absolute;
     filter: alpha(opacity=50);
     opacity: 0.5;
-    transition: all 0.02s linear;
 }
 
 .delete-button {
@@ -48,7 +43,6 @@
 }
 
 .app-row {
-    box-sizing: border-box;
     display: flex;
 }
 
@@ -56,7 +50,29 @@
     height: 10px;
     width: 100%;
     padding: 0;
+}
+
+.app-row-resize-cursor {
     cursor: ns-resize;
+}
+
+.app-row-drag-target:hover::before {
+    content: '';
+    background-color: lightblue;
+    display: inline-block;
+    position: relative;
+    top: -7px;
+    width: calc(100% - 20px);
+    height: 100%;
+    margin: 0 10px 0 10px;
+}
+
+.app-cell-drag-target:hover::before {
+    content: '';
+    background-color: lightblue;
+    display: inline-block;
+    width:100%;
+    height: 100%;
 }
 
 .app-cell {
@@ -72,6 +88,9 @@
 .app-cell-resize-bar {
     width: 10px;
     height: 100%;
+}
+
+.app-cell-resize-cursor {
     cursor: ew-resize;
 }
 
