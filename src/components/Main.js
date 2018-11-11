@@ -11,7 +11,7 @@ const RESIZE_MIN_SIZE = 120;
 class Main extends Component {
     constructor(props) {
         super(props);
-        this.state = {dragInfo: null, dragRect: null, dragTargetRect: null, dragDelta: null};
+        this.state = {dragInfo: null, dragRect: null, dragDelta: null, dragTarget: null};
         this.mouseDown = this.mouseDown.bind(this);
         this.mouseMove = this.mouseMove.bind(this);
         this.mouseUp = this.mouseUp.bind(this);
@@ -21,11 +21,11 @@ class Main extends Component {
         let rows = [];
         let cursor = this.state.dragRect === null;
         this.props.layout.forEach((v, i) => {
-            rows.push(<Row row={v} rowIndex={i} cursor={cursor} key={v.reports[0].id} total={this.props.layout.length}/>);
-            rows.push(<RowResizeBar row={i} cursor={cursor && i !== this.props.layout.length - 1} key={-i - 1}/>);
+            rows.push(<Row row={v} rowIndex={i} cursor={cursor} key={v.reports[0].id} dragInfo={Main.restoreDataPositionAttribute(this.state.dragInfo)} dragTarget={this.state.dragTarget} total={this.props.layout.length}/>);
+            rows.push(<RowResizeBar row={i} cursor={cursor && i !== this.props.layout.length - 1} selected={this.state.dragTarget === i.toString()} key={-i - 1}/>);
         });
         let children = [
-            <RowResizeBar row={-1} key={0}/>,
+            <RowResizeBar row={-1} key={0} selected={this.state.dragTarget === '-1'}/>,
             <div className="app-sub-main" key={-1}>
                 {rows}
             </div>
@@ -33,10 +33,6 @@ class Main extends Component {
         if (this.state.dragRect !== null) {
             let rect = this.state.dragRect;
             children.push(<div className='drag-rect' key={-2} style={{left: rect[0], top: rect[1], width: rect[2], height: rect[3]}}/>);
-        }
-        if (this.state.dragTargetRect !== null) {
-            let rect = this.state.dragTargetRect;
-            children.push(<div className='drag-target-rect' key={-3} style={{left: rect[0], top: rect[1], width: rect[2], height: rect[3]}}/>);
         }
         return (
             <main className="app-main">
@@ -84,12 +80,16 @@ class Main extends Component {
         return value.indexOf(',') >= 0 ? {row: +value.split(',')[0], cell: +value.split(',')[1]} : {row: +value};
     }
 
+    static restoreDataPositionAttribute(value) {
+        return value === null ? null : (value.cell === undefined ? value.row.toString() : value.row + ',' + value.cell);
+    }
+
     mouseMove(event) {
         if (this.state.dragInfo === null) {
             return false;
         }
         if (this.state.dragRect) {
-            this.setState({dragRect: this.getDragRect(event), dragTargetRect: this.getDragTargetRect(event)});
+            this.setState({dragRect: this.getDragRect(event), dragTarget: Main.getDragTargetInfo(event)});
         } else if (this.state.dragInfo.cell !== undefined) {
             this.resizeCellWidth(event.clientX);
         } else {
@@ -103,21 +103,21 @@ class Main extends Component {
             return false;
         }
         if (this.state.dragRect) {
-            let dragTargetInfo = Main.getDragTargetInfo(event);
+            let dragTarget = Main.parseDataPositionAttribute(this.state.dragTarget);
             let layout = JSON.parse(JSON.stringify(this.props.layout));
             let report = layout[this.state.dragInfo.row].reports.splice(this.state.dragInfo.cell, 1)[0];
-            report.width='*';
-            if (dragTargetInfo.cell === undefined) {
+            report.width = '*';
+            if (dragTarget.cell === undefined) {
                 layout.forEach(v => v.height = '*');
-                layout.splice(dragTargetInfo.row + 1, 0, {height: '*', reports: [report]});
+                layout.splice(dragTarget.row + 1, 0, {height: '*', reports: [report]});
             } else {
-                layout[dragTargetInfo.row].reports.forEach(v => v.width = '*');
-                layout[dragTargetInfo.row].reports.splice(dragTargetInfo.cell + 1, 0, report);
+                layout[dragTarget.row].reports.forEach(v => v.width = '*');
+                layout[dragTarget.row].reports.splice(dragTarget.cell + 1, 0, report);
             }
             layout = layout.filter(v => v.reports.length !== 0);
             this.props.setLayout(layout);
         }
-        this.setState({dragInfo: null, dragRect: null, dragTargetRect: null});
+        this.setState({dragInfo: null, dragRect: null, dragDelta: null, dragTarget: null});
         return false;
     }
 
@@ -132,10 +132,10 @@ class Main extends Component {
 
     static getDragTargetInfo(event) {
         let target = event.target;
-        let dragInfo = null;
         if (target.attributes['data-position']) {
-            dragInfo = Main.parseDataPositionAttribute(target.attributes['data-position'].value);
+            let dragInfo = target.attributes['data-position'].value;
             if (target.attributes['data-is-report']) {
+                dragInfo = Main.parseDataPositionAttribute(dragInfo);
                 let x = event.clientX - target.offsetLeft;
                 let y = event.clientY - target.offsetTop;
                 let w = target.offsetWidth;
@@ -144,40 +144,19 @@ class Main extends Component {
                 let eastSouth = (w - x) * h < y * w;
                 if (westSouth) {
                     if (eastSouth) { //south
-                        dragInfo = {row: dragInfo.row};
+                        return dragInfo.row.toString();
                     } else { //west
-                        dragInfo = {row: dragInfo.row, cell: dragInfo.cell - 1};
+                        return dragInfo.row + ',' + (dragInfo.cell - 1);
                     }
                 } else {
                     if (eastSouth) { //east
-                        dragInfo = {row: dragInfo.row, cell: dragInfo.cell};
+                        return dragInfo.row + ',' + dragInfo.cell;
                     } else { //north
-                        dragInfo = {row: dragInfo.row - 1};
+                        return (dragInfo.row - 1).toString();
                     }
                 }
-            }
-        }
-        return dragInfo;
-    }
-
-    getDragTargetRect(event) {
-        let target = event.target;
-        if (target.attributes['data-position']) {
-            let dragInfo = Main.getDragTargetInfo(event);
-            if (dragInfo.cell === undefined) {
-                return [
-                    RESIZE_BAR_SIZE,
-                    this.calculateTotalHeight(dragInfo.row + 1),
-                    this.screenWidth - 2 * RESIZE_BAR_SIZE,
-                    RESIZE_BAR_SIZE,
-                ];
             } else {
-                return [
-                    this.calculateTotalWidth(dragInfo.row, dragInfo.cell + 1),
-                    this.calculateTotalHeight(dragInfo.row) + RESIZE_BAR_SIZE,
-                    RESIZE_BAR_SIZE,
-                    this.calculateTotalHeight(dragInfo.row + 1) - this.calculateTotalHeight(dragInfo.row) - RESIZE_BAR_SIZE
-                ];
+                return dragInfo;
             }
         }
         return null;

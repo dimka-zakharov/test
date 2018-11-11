@@ -1,8 +1,8 @@
 import React from 'react';
 
-const RowResizeBar = ({row, cursor}) => {
+const RowResizeBar = ({row, cursor, selected}) => {
     return (
-        <div data-position={row} className={'app-row-resize-bar'+(cursor?' app-row-resize-cursor':'')}/>
+        <div data-position={row} className={'app-row-resize-bar' + (cursor ? ' app-row-resize-cursor' : '') + (selected ? ' drag-target':'')}/>
     );
 };
 

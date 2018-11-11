@@ -15,10 +15,10 @@ class Cell extends Component {
     }
 
     render() {
-        let {row, cell, report, total} = this.props;
+        let {row, cell, report, total, dragInfo} = this.props;
         let width = 'calc(' + (report.width === '*' ? 100 / total : report.width) + '% - ' + RESIZE_BAR_SIZE + 'px)';
         return (
-            <div data-position={[row, cell]} data-is-report={true} className='app-cell' style={{width: width}}>
+            <div data-position={[row, cell]} data-is-report={true} className={'app-cell' + (dragInfo === row + ',' + cell ? ' app-cell-dragged' : '')} style={{width: width}}>
                 <label className="title-label">{report.name}</label>
                 <button onClick={this.deleteReport} className="delete-button">x</button>
             </div>

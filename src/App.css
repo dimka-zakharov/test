@@ -27,14 +27,6 @@
     opacity: 0.5;
 }
 
-.drag-target-rect {
-    pointer-events: none;
-    background-color: #3333ff;
-    position: absolute;
-    filter: alpha(opacity=50);
-    opacity: 0.5;
-}
-
 .delete-button {
     float: right;
     margin: 3px 3px 0 0;
@@ -66,8 +58,15 @@
 
 .app-row-resize-bar {
     height: 10px;
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 0;
+    margin: 0 0 0 10px;
+}
+
+.drag-target {
+    background-color: #3333ff;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
 }
 
 .app-row-resize-cursor {
@@ -77,6 +76,11 @@
 .app-cell {
     background-color: #eee;
     font-weight: 600;
+}
+
+.app-cell-dragged {
+    border: 3px dashed blue;
+    border-radius: 3px;
 }
 
 .app-cell-resize-bar {
