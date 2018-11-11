@@ -21,7 +21,7 @@ class Main extends Component {
         let rows = [];
         let cursor = this.state.dragRect === null;
         this.props.layout.forEach((v, i) => {
-            rows.push(<Row row={v} rowIndex={i} animated={this.state.dragInfo === null} cursor={cursor} key={v.id} total={this.props.layout.length}/>)
+            rows.push(<Row row={v} rowIndex={i} cursor={cursor} key={v.reports[0].id} total={this.props.layout.length}/>);
             rows.push(<RowResizeBar row={i} cursor={cursor && i !== this.props.layout.length - 1} key={-i - 1}/>);
         });
         let children = [

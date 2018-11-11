@@ -79,10 +79,6 @@
     font-weight: 600;
 }
 
-.app-transition {
-    transition: all 0.15s linear;
-}
-
 .app-cell-resize-bar {
     width: 10px;
     height: 100%;
