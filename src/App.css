@@ -10,14 +10,26 @@
 }
 
 .app-main {
-    height: calc(100vh - 40px);
+    height: calc(100vh - 30px);
     position: relative;
     overflow: hidden;
+}
+
+.app-sub-main {
+    height: calc(100% - 10px);
 }
 
 .drag-rect {
     pointer-events: none;
     background-color: lightblue;
+    position: absolute;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+
+.drag-target-rect {
+    pointer-events: none;
+    background-color: #3333ff;
     position: absolute;
     filter: alpha(opacity=50);
     opacity: 0.5;
@@ -56,28 +68,8 @@
     cursor: ns-resize;
 }
 
-.app-row-drag-target:hover::before {
-    content: '';
-    background-color: lightblue;
-    display: inline-block;
-    position: relative;
-    top: -7px;
-    width: calc(100% - 20px);
-    height: 100%;
-    margin: 0 10px 0 10px;
-}
-
-.app-cell-drag-target:hover::before {
-    content: '';
-    background-color: lightblue;
-    display: inline-block;
-    width:100%;
-    height: 100%;
-}
-
 .app-cell {
     background-color: #eee;
-    padding: 2px 0 0 8px;
     font-weight: 600;
 }
 
