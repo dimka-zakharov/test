@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8a482b51c166f57405a7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c7c3f2537d94fdfa6dc5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1134,9 +1134,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var RowResizeBar = function RowResizeBar(_ref) {
     var row = _ref.row,
-        cursor = _ref.cursor;
+        cursor = _ref.cursor,
+        selected = _ref.selected;
 
-    return _react2.default.createElement('div', { 'data-position': row, className: 'app-row-resize-bar' + (cursor ? ' app-row-resize-cursor' : '') });
+    return _react2.default.createElement('div', { 'data-position': row, className: 'app-row-resize-bar' + (cursor ? ' app-row-resize-cursor' : '') + (selected ? ' drag-target' : '') });
 };
 
 exports.default = RowResizeBar;
@@ -1737,7 +1738,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, ".app {\n    text-align: center;\n}\n\n.app-header {\n    display: flex;\n    flex-direction: row;\n    font-size: 0.8em;\n    height: 30px;\n}\n\n.app-main {\n    height: calc(100vh - 30px);\n    position: relative;\n    overflow: hidden;\n}\n\n.app-sub-main {\n    height: calc(100% - 10px);\n}\n\n.drag-rect {\n    pointer-events: none;\n    background-color: lightblue;\n    position: absolute;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.drag-target-rect {\n    pointer-events: none;\n    background-color: #3333ff;\n    position: absolute;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.delete-button {\n    float: right;\n    margin: 3px 3px 0 0;\n    font-size: 16px;\n    border: 1px solid transparent;\n    border-radius: 3px;\n    cursor: pointer;\n    background-color: transparent;\n    font-family: \"Arial\";\n}\n\n.title-label {\n    margin: 1px 0 0 7px;\n    float: left;\n    pointer-events: none;\n}\n\n.delete-button:focus {\n    outline: 0;\n}\n\n.delete-button:hover {\n    background-color: lightgrey;\n}\n\n.app-row {\n    display: flex;\n}\n\n.app-row-resize-bar {\n    height: 10px;\n    width: 100%;\n    padding: 0;\n}\n\n.app-row-resize-cursor {\n    cursor: ns-resize;\n}\n\n.app-cell {\n    background-color: #eee;\n    font-weight: 600;\n}\n\n.app-cell-resize-bar {\n    width: 10px;\n    height: 100%;\n}\n\n.app-cell-resize-cursor {\n    cursor: ew-resize;\n}\n\ndiv {\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    user-drag: none;\n\n    -webkit-user-select: none;\n    -khtml-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    user-select: none;\n}\n\nselect {\n    margin: 5px 5px 5px 2px;\n}\n\nlabel {\n    margin: 5px 2px 5px 5px;\n}", ""]);
+exports.push([module.i, ".app {\n    text-align: center;\n}\n\n.app-header {\n    display: flex;\n    flex-direction: row;\n    font-size: 0.8em;\n    height: 30px;\n}\n\n.app-main {\n    height: calc(100vh - 30px);\n    position: relative;\n    overflow: hidden;\n}\n\n.app-sub-main {\n    height: calc(100% - 10px);\n}\n\n.drag-rect {\n    pointer-events: none;\n    background-color: lightblue;\n    position: absolute;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.delete-button {\n    float: right;\n    margin: 3px 3px 0 0;\n    font-size: 16px;\n    border: 1px solid transparent;\n    border-radius: 3px;\n    cursor: pointer;\n    background-color: transparent;\n    font-family: \"Arial\";\n}\n\n.title-label {\n    margin: 1px 0 0 7px;\n    float: left;\n    pointer-events: none;\n}\n\n.delete-button:focus {\n    outline: 0;\n}\n\n.delete-button:hover {\n    background-color: lightgrey;\n}\n\n.app-row {\n    display: flex;\n}\n\n.app-row-resize-bar {\n    height: 10px;\n    width: calc(100% - 20px);\n    padding: 0;\n    margin: 0 0 0 10px;\n}\n\n.drag-target {\n    background-color: #3333ff;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.app-row-resize-cursor {\n    cursor: ns-resize;\n}\n\n.app-cell {\n    background-color: #eee;\n    font-weight: 600;\n}\n\n.app-cell-dragged {\n    border: 3px dashed blue;\n    border-radius: 3px;\n}\n\n.app-cell-resize-bar {\n    width: 10px;\n    height: 100%;\n}\n\n.app-cell-resize-cursor {\n    cursor: ew-resize;\n}\n\ndiv {\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    user-drag: none;\n\n    -webkit-user-select: none;\n    -khtml-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    user-select: none;\n}\n\nselect {\n    margin: 5px 5px 5px 2px;\n}\n\nlabel {\n    margin: 5px 2px 5px 5px;\n}", ""]);
 
 // exports
 
@@ -28525,7 +28526,7 @@ var Main = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
-        _this.state = { dragInfo: null, dragRect: null, dragTargetRect: null, dragDelta: null };
+        _this.state = { dragInfo: null, dragRect: null, dragDelta: null, dragTarget: null };
         _this.mouseDown = _this.mouseDown.bind(_this);
         _this.mouseMove = _this.mouseMove.bind(_this);
         _this.mouseUp = _this.mouseUp.bind(_this);
@@ -28540,10 +28541,10 @@ var Main = function (_Component) {
             var rows = [];
             var cursor = this.state.dragRect === null;
             this.props.layout.forEach(function (v, i) {
-                rows.push(_react2.default.createElement(_Row2.default, { row: v, rowIndex: i, cursor: cursor, key: v.reports[0].id, total: _this2.props.layout.length }));
-                rows.push(_react2.default.createElement(_RowResizeBar2.default, { row: i, cursor: cursor && i !== _this2.props.layout.length - 1, key: -i - 1 }));
+                rows.push(_react2.default.createElement(_Row2.default, { row: v, rowIndex: i, cursor: cursor, key: v.reports[0].id, dragTarget: _this2.state.dragTarget, total: _this2.props.layout.length }));
+                rows.push(_react2.default.createElement(_RowResizeBar2.default, { row: i, cursor: cursor && i !== _this2.props.layout.length - 1, selected: _this2.state.dragTarget === i.toString(), key: -i - 1 }));
             });
-            var children = [_react2.default.createElement(_RowResizeBar2.default, { row: -1, key: 0 }), _react2.default.createElement(
+            var children = [_react2.default.createElement(_RowResizeBar2.default, { row: -1, key: 0, selected: this.state.dragTarget === '-1' }), _react2.default.createElement(
                 'div',
                 { className: 'app-sub-main', key: -1 },
                 rows
@@ -28551,10 +28552,6 @@ var Main = function (_Component) {
             if (this.state.dragRect !== null) {
                 var rect = this.state.dragRect;
                 children.push(_react2.default.createElement('div', { className: 'drag-rect', key: -2, style: { left: rect[0], top: rect[1], width: rect[2], height: rect[3] } }));
-            }
-            if (this.state.dragTargetRect !== null) {
-                var _rect = this.state.dragTargetRect;
-                children.push(_react2.default.createElement('div', { className: 'drag-target-rect', key: -3, style: { left: _rect[0], top: _rect[1], width: _rect[2], height: _rect[3] } }));
             }
             return _react2.default.createElement(
                 'main',
@@ -28604,7 +28601,7 @@ var Main = function (_Component) {
                 return false;
             }
             if (this.state.dragRect) {
-                this.setState({ dragRect: this.getDragRect(event), dragTargetRect: this.getDragTargetRect(event) });
+                this.setState({ dragRect: this.getDragRect(event), dragTarget: Main.getDragTarget(event) });
             } else if (this.state.dragInfo.cell !== undefined) {
                 this.resizeCellWidth(event.clientX);
             } else {
@@ -28619,47 +28616,36 @@ var Main = function (_Component) {
                 return false;
             }
             if (this.state.dragRect) {
-                var dragTargetInfo = Main.getDragTargetInfo(event);
+                var dragTarget = Main.parseDataPositionAttribute(this.state.dragTarget);
                 var layout = JSON.parse(JSON.stringify(this.props.layout));
                 var report = layout[this.state.dragInfo.row].reports.splice(this.state.dragInfo.cell, 1)[0];
+                layout[this.state.dragInfo.row].reports.forEach(function (v) {
+                    return v.width = '*';
+                });
                 report.width = '*';
-                if (dragTargetInfo.cell === undefined) {
+                if (dragTarget.cell === undefined) {
                     layout.forEach(function (v) {
                         return v.height = '*';
                     });
-                    layout.splice(dragTargetInfo.row + 1, 0, { height: '*', reports: [report] });
+                    layout.splice(dragTarget.row + 1, 0, { height: '*', reports: [report] });
                 } else {
-                    layout[dragTargetInfo.row].reports.forEach(function (v) {
+                    layout[dragTarget.row].reports.forEach(function (v) {
                         return v.width = '*';
                     });
-                    layout[dragTargetInfo.row].reports.splice(dragTargetInfo.cell + 1, 0, report);
+                    layout[dragTarget.row].reports.splice(dragTarget.cell + 1, 0, report);
                 }
                 layout = layout.filter(function (v) {
                     return v.reports.length !== 0;
                 });
                 this.props.setLayout(layout);
             }
-            this.setState({ dragInfo: null, dragRect: null, dragTargetRect: null });
+            this.setState({ dragInfo: null, dragRect: null, dragDelta: null, dragTarget: null });
             return false;
         }
     }, {
         key: 'getDragRect',
         value: function getDragRect(event) {
             return [event.clientX - this.screenLeft - this.state.dragDelta[0], event.clientY - this.screenTop - this.state.dragDelta[1], this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell + 1) - this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell) - _RowResizeBar3.RESIZE_BAR_SIZE, this.calculateTotalHeight(this.state.dragInfo.row + 1) - this.calculateTotalHeight(this.state.dragInfo.row) - _RowResizeBar3.RESIZE_BAR_SIZE];
-        }
-    }, {
-        key: 'getDragTargetRect',
-        value: function getDragTargetRect(event) {
-            var target = event.target;
-            if (target.attributes['data-position']) {
-                var dragInfo = Main.getDragTargetInfo(event);
-                if (dragInfo.cell === undefined) {
-                    return [_RowResizeBar3.RESIZE_BAR_SIZE, this.calculateTotalHeight(dragInfo.row + 1), this.screenWidth - 2 * _RowResizeBar3.RESIZE_BAR_SIZE, _RowResizeBar3.RESIZE_BAR_SIZE];
-                } else {
-                    return [this.calculateTotalWidth(dragInfo.row, dragInfo.cell + 1), this.calculateTotalHeight(dragInfo.row) + _RowResizeBar3.RESIZE_BAR_SIZE, _RowResizeBar3.RESIZE_BAR_SIZE, this.calculateTotalHeight(dragInfo.row + 1) - this.calculateTotalHeight(dragInfo.row) - _RowResizeBar3.RESIZE_BAR_SIZE];
-                }
-            }
-            return null;
         }
     }, {
         key: 'resizeCellWidth',
@@ -28723,13 +28709,13 @@ var Main = function (_Component) {
             return value.indexOf(',') >= 0 ? { row: +value.split(',')[0], cell: +value.split(',')[1] } : { row: +value };
         }
     }, {
-        key: 'getDragTargetInfo',
-        value: function getDragTargetInfo(event) {
+        key: 'getDragTarget',
+        value: function getDragTarget(event) {
             var target = event.target;
-            var dragInfo = null;
             if (target.attributes['data-position']) {
-                dragInfo = Main.parseDataPositionAttribute(target.attributes['data-position'].value);
+                var dragTarget = target.attributes['data-position'].value;
                 if (target.attributes['data-is-report']) {
+                    dragTarget = Main.parseDataPositionAttribute(dragTarget);
                     var x = event.clientX - target.offsetLeft;
                     var y = event.clientY - target.offsetTop;
                     var w = target.offsetWidth;
@@ -28739,23 +28725,25 @@ var Main = function (_Component) {
                     if (westSouth) {
                         if (eastSouth) {
                             //south
-                            dragInfo = { row: dragInfo.row };
+                            return dragTarget.row.toString();
                         } else {
                             //west
-                            dragInfo = { row: dragInfo.row, cell: dragInfo.cell - 1 };
+                            return dragTarget.row + ',' + (dragTarget.cell - 1);
                         }
                     } else {
                         if (eastSouth) {
                             //east
-                            dragInfo = { row: dragInfo.row, cell: dragInfo.cell };
+                            return dragTarget.row + ',' + dragTarget.cell;
                         } else {
                             //north
-                            dragInfo = { row: dragInfo.row - 1 };
+                            return (dragTarget.row - 1).toString();
                         }
                     }
+                } else {
+                    return dragTarget;
                 }
             }
-            return dragInfo;
+            return null;
         }
     }]);
 
@@ -28803,18 +28791,19 @@ var Row = function Row(_ref) {
     var row = _ref.row,
         rowIndex = _ref.rowIndex,
         cursor = _ref.cursor,
-        total = _ref.total;
+        total = _ref.total,
+        dragTarget = _ref.dragTarget;
 
     var height = 'calc(' + (row.height === '*' ? 100 / total : row.height) + '% - ' + _RowResizeBar.RESIZE_BAR_SIZE + 'px)';
     var cells = [];
     row.reports.forEach(function (v, i) {
         cells.push(_react2.default.createElement(_Cell2.default, { row: rowIndex, cell: i, report: v, key: v.id, total: row.reports.length }));
-        cells.push(_react2.default.createElement(_CellResizeBar2.default, { row: rowIndex, cursor: cursor && i !== row.reports.length - 1, cell: i, key: -i - 1 }));
+        cells.push(_react2.default.createElement(_CellResizeBar2.default, { row: rowIndex, cursor: cursor && i !== row.reports.length - 1, cell: i, key: -i - 1, selected: dragTarget === rowIndex + ',' + i }));
     });
     return [_react2.default.createElement(
         'div',
         { className: 'app-row', style: { width: '100%', height: height }, key: rowIndex },
-        _react2.default.createElement(_CellResizeBar2.default, { row: rowIndex, cell: -1, key: 0 }),
+        _react2.default.createElement(_CellResizeBar2.default, { row: rowIndex, cell: -1, key: 0, selected: dragTarget === rowIndex + ',-1' }),
         _react2.default.createElement(
             'div',
             { className: 'app-row', style: { height: '100%', width: 'calc(100% - 10px)' }, key: -1 },
@@ -28929,9 +28918,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var CellResizeBar = function CellResizeBar(_ref) {
     var row = _ref.row,
         cell = _ref.cell,
-        cursor = _ref.cursor;
+        cursor = _ref.cursor,
+        selected = _ref.selected;
 
-    return _react2.default.createElement('div', { 'data-position': [row, cell], className: 'app-cell-resize-bar' + (cursor ? ' app-cell-resize-cursor' : '') });
+    return _react2.default.createElement('div', { 'data-position': [row, cell], className: 'app-cell-resize-bar' + (cursor ? ' app-cell-resize-cursor' : '') + (selected ? ' drag-target' : '') });
 };
 
 exports.default = CellResizeBar;
