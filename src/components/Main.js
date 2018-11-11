@@ -21,7 +21,7 @@ class Main extends Component {
         let rows = [];
         let cursor = this.state.dragRect === null;
         this.props.layout.forEach((v, i) => {
-            rows.push(<Row row={v} rowIndex={i} cursor={cursor} key={v.reports[0].id} dragInfo={Main.restoreDataPositionAttribute(this.state.dragInfo)} dragTarget={this.state.dragTarget} total={this.props.layout.length}/>);
+            rows.push(<Row row={v} rowIndex={i} cursor={cursor} key={v.reports[0].id} dragTarget={this.state.dragTarget} total={this.props.layout.length}/>);
             rows.push(<RowResizeBar row={i} cursor={cursor && i !== this.props.layout.length - 1} selected={this.state.dragTarget === i.toString()} key={-i - 1}/>);
         });
         let children = [
@@ -80,16 +80,12 @@ class Main extends Component {
         return value.indexOf(',') >= 0 ? {row: +value.split(',')[0], cell: +value.split(',')[1]} : {row: +value};
     }
 
-    static restoreDataPositionAttribute(value) {
-        return value === null ? null : (value.cell === undefined ? value.row.toString() : value.row + ',' + value.cell);
-    }
-
     mouseMove(event) {
         if (this.state.dragInfo === null) {
             return false;
         }
         if (this.state.dragRect) {
-            this.setState({dragRect: this.getDragRect(event), dragTarget: Main.getDragTargetInfo(event)});
+            this.setState({dragRect: this.getDragRect(event), dragTarget: Main.getDragTarget(event)});
         } else if (this.state.dragInfo.cell !== undefined) {
             this.resizeCellWidth(event.clientX);
         } else {
@@ -106,6 +102,7 @@ class Main extends Component {
             let dragTarget = Main.parseDataPositionAttribute(this.state.dragTarget);
             let layout = JSON.parse(JSON.stringify(this.props.layout));
             let report = layout[this.state.dragInfo.row].reports.splice(this.state.dragInfo.cell, 1)[0];
+            layout[this.state.dragInfo.row].reports.forEach(v => v.width = '*');
             report.width = '*';
             if (dragTarget.cell === undefined) {
                 layout.forEach(v => v.height = '*');
@@ -130,12 +127,12 @@ class Main extends Component {
         ];
     }
 
-    static getDragTargetInfo(event) {
+    static getDragTarget(event) {
         let target = event.target;
         if (target.attributes['data-position']) {
-            let dragInfo = target.attributes['data-position'].value;
+            let dragTarget = target.attributes['data-position'].value;
             if (target.attributes['data-is-report']) {
-                dragInfo = Main.parseDataPositionAttribute(dragInfo);
+                dragTarget = Main.parseDataPositionAttribute(dragTarget);
                 let x = event.clientX - target.offsetLeft;
                 let y = event.clientY - target.offsetTop;
                 let w = target.offsetWidth;
@@ -144,19 +141,19 @@ class Main extends Component {
                 let eastSouth = (w - x) * h < y * w;
                 if (westSouth) {
                     if (eastSouth) { //south
-                        return dragInfo.row.toString();
+                        return dragTarget.row.toString();
                     } else { //west
-                        return dragInfo.row + ',' + (dragInfo.cell - 1);
+                        return dragTarget.row + ',' + (dragTarget.cell - 1);
                     }
                 } else {
                     if (eastSouth) { //east
-                        return dragInfo.row + ',' + dragInfo.cell;
+                        return dragTarget.row + ',' + dragTarget.cell;
                     } else { //north
-                        return (dragInfo.row - 1).toString();
+                        return (dragTarget.row - 1).toString();
                     }
                 }
             } else {
-                return dragInfo;
+                return dragTarget;
             }
         }
         return null;
