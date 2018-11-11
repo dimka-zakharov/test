@@ -3,6 +3,7 @@ export default function main(state = getInitialState(), action) {
         case 'SET_CURRENT_VIEW':
             return Object.assign({}, state, {currentView: action.payload});
         case 'SET_LAYOUT':
+            updateRowIds(action.payload);
             return Object.assign({}, state, {layout: action.payload});
         case 'ADD_REPORT_EMPTY_WIDTH':
             let newState = JSON.parse(JSON.stringify(state));
@@ -22,7 +23,7 @@ export default function main(state = getInitialState(), action) {
             let reports = newState.layout[action.payload[0]].reports;
             if (reports.length === 1) {
                 newState.layout.forEach(v => v.height = 100 / (newState.layout.length - 1));
-                newState.layout[action.payload[0]].height= 0;
+                newState.layout[action.payload[0]].height = 0;
             } else {
                 reports.forEach(v => v.width = 100 / (reports.length - 1));
                 reports[action.payload[1]].width = 0;
@@ -49,8 +50,21 @@ function getNextId(layout) {
     return result;
 }
 
+function getNextRowId(layout) {
+    return layout.reduce((a, v) => v.id !== undefined ? Math.max(a, v.id + 1) : a, 0);
+}
+
+function updateRowIds(layout) {
+    layout.forEach(v => {
+        if (!v.id) {
+            v.id = getNextRowId(layout);
+        }
+    });
+}
+
+
 function getInitialState() {
-    return {
+    let state = {
         currentView: '',
         layout: [
             {
@@ -79,4 +93,6 @@ function getInitialState() {
             }
         ]
     };
+    updateRowIds(state.layout);
+    return state;
 }
