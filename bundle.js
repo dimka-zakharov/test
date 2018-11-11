@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "aa447ffccea3cae6f1b4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8b1ad38a08e928c13c13"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1149,9 +1149,10 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var RowResizeBar = function RowResizeBar(_ref) {
-    var row = _ref.row;
+    var row = _ref.row,
+        cursor = _ref.cursor;
 
-    return _react2.default.createElement('div', { 'data-position': row, className: 'app-row-resize-bar' });
+    return _react2.default.createElement('div', { 'data-position': row, className: 'app-row-resize-bar' + (cursor ? ' app-row-resize-cursor' : '') });
 };
 
 exports.default = RowResizeBar;
@@ -1752,7 +1753,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, ".app {\n    text-align: center;\n}\n\n.app-header {\n    display: flex;\n    flex-direction: row;\n    font-size: 0.8em;\n    height: 30px;\n    padding-top: 2px;\n}\n\n.app-main {\n    height: calc(100vh - 40px);\n    position: relative;\n    overflow: hidden;\n    margin: 5px 0 0 10px;\n}\n\n.resize-rect {\n    border: 2px solid blue;\n    border-radius: 3px;\n    background-color: lightblue;\n    position: absolute;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.delete-button {\n    float: right;\n    margin: 2px 4px 0 0;\n    font-size: 16px;\n    border: 1px solid transparent;\n    border-radius: 3px;\n    cursor: pointer;\n    background-color: transparent;\n    font-family: \"Arial\";\n}\n\n.delete-button:focus {\n    outline: 0;\n}\n\n.delete-button:hover {\n    background-color: lightgrey;\n}\n\n.app-row {\n    box-sizing: border-box;\n    display: flex;\n}\n\n.app-row-resize-bar {\n    height: 10px;\n    width: 100%;\n    padding: 0;\n    cursor: ns-resize;\n}\n\n.app-cell {\n    background-color: #eee;\n    padding: 2px 0 0 8px;\n    font-weight: 600;\n}\n\n.app-transition {\n    transition: all 0.15s linear;\n}\n\n.app-cell-resize-bar {\n    width: 10px;\n    height: 100%;\n    cursor: ew-resize;\n}\n\ndiv {\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    user-drag: none;\n\n    -webkit-user-select: none;\n    -khtml-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    user-select: none;\n}\n\nselect {\n    margin: 5px 5px 5px 2px;\n}\n\nlabel {\n    margin: 5px 2px 5px 5px;\n}", ""]);
+exports.push([module.i, ".app {\n    text-align: center;\n}\n\n.app-header {\n    display: flex;\n    flex-direction: row;\n    font-size: 0.8em;\n    height: 30px;\n}\n\n.app-main {\n    height: calc(100vh - 30px);\n    position: relative;\n    overflow: hidden;\n}\n\n.app-sub-main {\n    height: calc(100% - 10px);\n}\n\n.drag-rect {\n    pointer-events: none;\n    background-color: lightblue;\n    position: absolute;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.drag-target-rect {\n    pointer-events: none;\n    background-color: #3333ff;\n    position: absolute;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.delete-button {\n    float: right;\n    margin: 3px 3px 0 0;\n    font-size: 16px;\n    border: 1px solid transparent;\n    border-radius: 3px;\n    cursor: pointer;\n    background-color: transparent;\n    font-family: \"Arial\";\n}\n\n.title-label {\n    margin: 1px 0 0 7px;\n    float: left;\n    pointer-events: none;\n}\n\n.delete-button:focus {\n    outline: 0;\n}\n\n.delete-button:hover {\n    background-color: lightgrey;\n}\n\n.app-row {\n    display: flex;\n}\n\n.app-row-resize-bar {\n    height: 10px;\n    width: 100%;\n    padding: 0;\n}\n\n.app-row-resize-cursor {\n    cursor: ns-resize;\n}\n\n.app-cell {\n    background-color: #eee;\n    font-weight: 600;\n}\n\n.app-transition {\n    transition: all 0.15s linear;\n}\n\n.app-cell-resize-bar {\n    width: 10px;\n    height: 100%;\n}\n\n.app-cell-resize-cursor {\n    cursor: ew-resize;\n}\n\ndiv {\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    user-drag: none;\n\n    -webkit-user-select: none;\n    -khtml-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    user-select: none;\n}\n\nselect {\n    margin: 5px 5px 5px 2px;\n}\n\nlabel {\n    margin: 5px 2px 5px 5px;\n}", ""]);
 
 // exports
 
@@ -28530,16 +28531,17 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var RESIZE_MIN_SIZE = 120;
+
 var Main = function (_Component) {
     _inherits(Main, _Component);
 
     function Main(props) {
         _classCallCheck(this, Main);
 
-        //this.dragDelta = null;
         var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
-        _this.state = { dragInfo: null, dragRect: null };
+        _this.state = { dragInfo: null, dragRect: null, dragTargetRect: null, dragDelta: null };
         _this.mouseDown = _this.mouseDown.bind(_this);
         _this.mouseMove = _this.mouseMove.bind(_this);
         _this.mouseUp = _this.mouseUp.bind(_this);
@@ -28552,20 +28554,28 @@ var Main = function (_Component) {
             var _this2 = this;
 
             var rows = [];
+            var cursor = this.state.dragRect === null;
             this.props.layout.forEach(function (v, i) {
-                if (i > 0) {
-                    rows.push(_react2.default.createElement(_RowResizeBar2.default, { row: i - 1, key: -i }));
-                }
-                rows.push(_react2.default.createElement(_Row2.default, { row: v, rowIndex: i, animated: _this2.state.dragInfo === null, key: v.reports[0].id, total: _this2.props.layout.length }));
+                rows.push(_react2.default.createElement(_Row2.default, { row: v, rowIndex: i, animated: _this2.state.dragInfo === null, cursor: cursor, key: v.reports[0].id, total: _this2.props.layout.length }));
+                rows.push(_react2.default.createElement(_RowResizeBar2.default, { row: i, cursor: cursor && i !== _this2.props.layout.length - 1, key: -i - 1 }));
             });
+            var children = [_react2.default.createElement(_RowResizeBar2.default, { row: -1, key: 0 }), _react2.default.createElement(
+                'div',
+                { className: 'app-sub-main', key: -1 },
+                rows
+            )];
             if (this.state.dragRect !== null) {
                 var rect = this.state.dragRect;
-                rows.push(_react2.default.createElement('div', { className: 'resize-rect', style: { left: rect[0], top: rect[1], width: rect[2], height: rect[3] } }));
+                children.push(_react2.default.createElement('div', { className: 'drag-rect', key: -2, style: { left: rect[0], top: rect[1], width: rect[2], height: rect[3] } }));
+            }
+            if (this.state.dragTargetRect !== null) {
+                var _rect = this.state.dragTargetRect;
+                children.push(_react2.default.createElement('div', { className: 'drag-target-rect', key: -3, style: { left: _rect[0], top: _rect[1], width: _rect[2], height: _rect[3] } }));
             }
             return _react2.default.createElement(
                 'main',
                 { className: 'app-main' },
-                rows
+                children
             );
         }
     }, {
@@ -28585,26 +28595,21 @@ var Main = function (_Component) {
     }, {
         key: 'mouseDown',
         value: function mouseDown(event) {
-            if (event.target.attributes['data-position']) {
-                if (!this.screenHeight) {
-                    var element = document.getElementsByTagName('main')[0];
-                    this.screenHeight = element.offsetHeight;
-                    this.screenTop = element.offsetTop;
-                    this.screenWidth = element.offsetWidth;
-                    this.screenLeft = element.offsetLeft;
-                }
+            var target = event.target;
+            if (target.attributes['data-position']) {
+                var element = document.getElementsByClassName('app-main')[0];
+                this.screenHeight = element.offsetHeight;
+                this.screenTop = element.offsetTop;
+                this.screenWidth = element.offsetWidth;
+                this.screenLeft = element.offsetLeft;
 
-                var value = event.target.attributes['data-position'].value;
-                var dragInfo = value.indexOf(',') >= 0 ? { row: +value.split(',')[0], cell: +value.split(',')[1] } : { row: +value };
-                //this.dragDelta = [event.clientX - this.calculateTotalWidth(this.dragInfo.row+1, this.dragInfo.cell+1), event.clientY - this.calculateTotalHeight(this.dragInfo.row+1)];
-                var dragRect = null;
-                if (event.target.attributes['data-is-report']) {
-                    dragInfo.report = true;
-                    dragRect = this.getDragRect(event);
-                }
-                this.setState({ dragInfo: dragInfo, dragRect: dragRect });
+                var dragInfo = Main.parseDataPositionAttribute(target.attributes['data-position'].value);
+                var dragRect = target.attributes['data-is-report'] ? [target.offsetLeft, target.offsetTop, target.offsetWidth, target.offsetHeight] : null;
+                var dragTargetRect = null;
+                var dragDelta = [event.clientX - this.calculateTotalWidth(dragInfo.row, dragInfo.cell + (target.attributes['data-is-report'] ? 0 : 1)) - this.screenLeft, event.clientY - this.calculateTotalHeight(dragInfo.row + (target.attributes['data-is-report'] ? 0 : 1)) - this.screenTop];
+                this.setState({ dragInfo: dragInfo, dragRect: dragRect, dragTargetRect: dragTargetRect, dragDelta: dragDelta });
             } else {
-                this.setState({ dragInfo: null });
+                this.setState({ dragInfo: null, dragRect: null, dragTargetRect: null, dragDelta: null });
             }
             return false;
         }
@@ -28614,9 +28619,8 @@ var Main = function (_Component) {
             if (this.state.dragInfo === null) {
                 return false;
             }
-            if (this.state.dragInfo.report) {
-                //this.setState({dragRect: this.getDragRect(event)});
-                //this.moveReport(event.clientX, event.clientY);
+            if (this.state.dragRect) {
+                this.setState({ dragRect: this.getDragRect(event), dragTargetRect: this.getDragTargetRect(event) });
             } else if (this.state.dragInfo.cell !== undefined) {
                 this.resizeCellWidth(event.clientX);
             } else {
@@ -28630,65 +28634,82 @@ var Main = function (_Component) {
             if (this.state.dragInfo === null) {
                 return false;
             }
-            if (this.state.dragInfo.report) {
-                //todo this.moveReport(event.clientX, event.clientY);
+            if (this.state.dragRect) {
+                var dragTargetInfo = Main.getDragTargetInfo(event);
+                var layout = JSON.parse(JSON.stringify(this.props.layout));
+                var report = layout[this.state.dragInfo.row].reports.splice(this.state.dragInfo.cell, 1)[0];
+                if (dragTargetInfo.cell === undefined) {
+                    layout.forEach(function (v) {
+                        return v.height = '*';
+                    });
+                    layout.splice(dragTargetInfo.row + 1, 0, { height: '*', reports: [report] });
+                } else {
+                    layout[dragTargetInfo.row].reports.forEach(function (v) {
+                        return v.width = '*';
+                    });
+                    layout[dragTargetInfo.row].reports.splice(dragTargetInfo.cell + 1, 0, report);
+                }
+                layout = layout.filter(function (v) {
+                    return v.reports.length !== 0;
+                });
+                this.props.setLayout(layout);
             }
-            this.setState({ dragInfo: null, dragRect: null });
+            this.setState({ dragInfo: null, dragRect: null, dragTargetRect: null });
             return false;
         }
     }, {
         key: 'getDragRect',
         value: function getDragRect(event) {
-            if (this.state.dragInfo.report) {
-                //todo this.moveReport(event.clientX, event.clientY);
-                return [];
-            } else if (this.state.dragInfo.cell !== undefined) {
-                var left = this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell);
-                var top = this.calculateTotalHeight(this.state.dragInfo.row);
-                var width = Math.max(event.clientX - this.screenLeft - left, 0);
-                var height = this.calculateTotalHeight(this.state.dragInfo.row + 1) - top - _RowResizeBar3.RESIZE_BAR_SIZE - 4;
-                return [left, top, width, height];
-            } else {
-                var _left = 0;
-                var _top = this.calculateTotalHeight(this.state.dragInfo.row);
-                var _width = this.screenWidth - _RowResizeBar3.RESIZE_BAR_SIZE - 4;
-                var _height = Math.max(event.clientY - this.screenTop - _top, 0);
-                return [_left, _top, _width, _height];
+            return [event.clientX - this.screenLeft - this.state.dragDelta[0], event.clientY - this.screenTop - this.state.dragDelta[1], this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell + 1) - this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell) - _RowResizeBar3.RESIZE_BAR_SIZE, this.calculateTotalHeight(this.state.dragInfo.row + 1) - this.calculateTotalHeight(this.state.dragInfo.row) - _RowResizeBar3.RESIZE_BAR_SIZE];
+        }
+    }, {
+        key: 'getDragTargetRect',
+        value: function getDragTargetRect(event) {
+            var target = event.target;
+            if (target.attributes['data-position']) {
+                var dragInfo = Main.getDragTargetInfo(event);
+                if (dragInfo.cell === undefined) {
+                    return [_RowResizeBar3.RESIZE_BAR_SIZE, this.calculateTotalHeight(dragInfo.row + 1), this.screenWidth - 2 * _RowResizeBar3.RESIZE_BAR_SIZE, _RowResizeBar3.RESIZE_BAR_SIZE];
+                } else {
+                    return [this.calculateTotalWidth(dragInfo.row, dragInfo.cell + 1), this.calculateTotalHeight(dragInfo.row) + _RowResizeBar3.RESIZE_BAR_SIZE, _RowResizeBar3.RESIZE_BAR_SIZE, this.calculateTotalHeight(dragInfo.row + 1) - this.calculateTotalHeight(dragInfo.row) - _RowResizeBar3.RESIZE_BAR_SIZE];
+                }
             }
+            return null;
         }
     }, {
         key: 'resizeCellWidth',
         value: function resizeCellWidth(eventX) {
-            var minWidth = this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell);
-            var maxWidth = this.calculateTotalWidth(this.state.dragInfo.row, this.state.dragInfo.cell + 2);
-            var width = eventX - this.screenLeft;
-            if (width < minWidth + _RowResizeBar3.RESIZE_BAR_SIZE) {
-                width = minWidth + _RowResizeBar3.RESIZE_BAR_SIZE;
+            var dragInfo = this.state.dragInfo;
+            var minWidth = this.calculateTotalWidth(dragInfo.row, dragInfo.cell);
+            var maxWidth = this.calculateTotalWidth(dragInfo.row, dragInfo.cell + 2);
+            var width = eventX - this.screenLeft - this.state.dragDelta[0];
+            if (width < minWidth + RESIZE_MIN_SIZE) {
+                width = minWidth + RESIZE_MIN_SIZE;
             }
-            if (width > maxWidth - _RowResizeBar3.RESIZE_BAR_SIZE) {
-                width = maxWidth - _RowResizeBar3.RESIZE_BAR_SIZE;
+            if (width > maxWidth - RESIZE_MIN_SIZE) {
+                width = maxWidth - RESIZE_MIN_SIZE;
             }
             var layout = JSON.parse(JSON.stringify(this.props.layout));
-            layout[this.state.dragInfo.row].reports[this.state.dragInfo.cell].width = (width - minWidth) * 100 / this.screenWidth;
-            layout[this.state.dragInfo.row].reports[this.state.dragInfo.cell + 1].width = (maxWidth - width) * 100 / this.screenWidth;
+            layout[dragInfo.row].reports[dragInfo.cell].width = (width - minWidth) * 100 / (this.screenWidth - _RowResizeBar3.RESIZE_BAR_SIZE);
+            layout[dragInfo.row].reports[dragInfo.cell + 1].width = (maxWidth - width) * 100 / (this.screenWidth - _RowResizeBar3.RESIZE_BAR_SIZE);
             this.props.setLayout(layout);
         }
     }, {
         key: 'resizeRowHeight',
         value: function resizeRowHeight(eventY) {
-            var minHeight = this.calculateTotalHeight(this.state.dragInfo.row);
-            var maxHeight = this.calculateTotalHeight(this.state.dragInfo.row + 2);
-            var height = eventY - this.screenTop;
-            if (height < minHeight + _RowResizeBar3.RESIZE_BAR_SIZE) {
-                height = minHeight + _RowResizeBar3.RESIZE_BAR_SIZE;
+            var dragInfo = this.state.dragInfo;
+            var minHeight = this.calculateTotalHeight(dragInfo.row);
+            var maxHeight = this.calculateTotalHeight(dragInfo.row + 2);
+            var height = eventY - this.screenTop - this.state.dragDelta[1];
+            if (height < minHeight + RESIZE_MIN_SIZE) {
+                height = minHeight + RESIZE_MIN_SIZE;
             }
-            if (height > maxHeight - _RowResizeBar3.RESIZE_BAR_SIZE) {
-                height = maxHeight - _RowResizeBar3.RESIZE_BAR_SIZE;
+            if (height > maxHeight - RESIZE_MIN_SIZE) {
+                height = maxHeight - RESIZE_MIN_SIZE;
             }
-
             var layout = JSON.parse(JSON.stringify(this.props.layout));
-            layout[this.state.dragInfo.row].height = (height - minHeight) * 100 / this.screenHeight;
-            layout[this.state.dragInfo.row + 1].height = (maxHeight - height) * 100 / this.screenHeight;
+            layout[dragInfo.row].height = (height - minHeight) * 100 / (this.screenHeight - _RowResizeBar3.RESIZE_BAR_SIZE);
+            layout[dragInfo.row + 1].height = (maxHeight - height) * 100 / (this.screenHeight - _RowResizeBar3.RESIZE_BAR_SIZE);
             this.props.setLayout(layout);
         }
     }, {
@@ -28697,7 +28718,7 @@ var Main = function (_Component) {
             var result = 0;
             for (var i = 0; i < rowIndex; i++) {
                 var height = this.props.layout[i].height;
-                result += height === '*' ? this.screenHeight / this.props.layout.length : height * this.screenHeight / 100;
+                result += height === '*' ? (this.screenHeight - _RowResizeBar3.RESIZE_BAR_SIZE) / this.props.layout.length : height * (this.screenHeight - _RowResizeBar3.RESIZE_BAR_SIZE) / 100;
             }
             return result;
         }
@@ -28707,9 +28728,49 @@ var Main = function (_Component) {
             var result = 0;
             for (var i = 0; i < cellIndex; i++) {
                 var width = this.props.layout[rowIndex].reports[i].width;
-                result += width === '*' ? this.screenWidth / this.props.layout[rowIndex].reports.length : width * this.screenWidth / 100;
+                result += width === '*' ? (this.screenWidth - _RowResizeBar3.RESIZE_BAR_SIZE) / this.props.layout[rowIndex].reports.length : width * (this.screenWidth - _RowResizeBar3.RESIZE_BAR_SIZE) / 100;
             }
             return result;
+        }
+    }], [{
+        key: 'parseDataPositionAttribute',
+        value: function parseDataPositionAttribute(value) {
+            return value.indexOf(',') >= 0 ? { row: +value.split(',')[0], cell: +value.split(',')[1] } : { row: +value };
+        }
+    }, {
+        key: 'getDragTargetInfo',
+        value: function getDragTargetInfo(event) {
+            var target = event.target;
+            var dragInfo = null;
+            if (target.attributes['data-position']) {
+                dragInfo = Main.parseDataPositionAttribute(target.attributes['data-position'].value);
+                if (target.attributes['data-is-report']) {
+                    var x = event.clientX - target.offsetLeft;
+                    var y = event.clientY - target.offsetTop;
+                    var w = target.offsetWidth;
+                    var h = target.offsetHeight;
+                    var westSouth = x * h < y * w;
+                    var eastSouth = (w - x) * h < y * w;
+                    if (westSouth) {
+                        if (eastSouth) {
+                            //south
+                            dragInfo = { row: dragInfo.row };
+                        } else {
+                            //west
+                            dragInfo = { row: dragInfo.row, cell: dragInfo.cell - 1 };
+                        }
+                    } else {
+                        if (eastSouth) {
+                            //east
+                            dragInfo = { row: dragInfo.row, cell: dragInfo.cell };
+                        } else {
+                            //north
+                            dragInfo = { row: dragInfo.row - 1 };
+                        }
+                    }
+                }
+            }
+            return dragInfo;
         }
     }]);
 
@@ -28757,21 +28818,25 @@ var Row = function Row(_ref) {
     var row = _ref.row,
         rowIndex = _ref.rowIndex,
         animated = _ref.animated,
+        cursor = _ref.cursor,
         total = _ref.total;
 
     var height = 'calc(' + (row.height === '*' ? 100 / total : row.height) + '% - ' + _RowResizeBar.RESIZE_BAR_SIZE + 'px)';
     var cells = [];
     row.reports.forEach(function (v, i) {
-        if (i > 0) {
-            cells.push(_react2.default.createElement(_CellResizeBar2.default, { row: rowIndex, cell: i - 1, key: -i }));
-        }
         cells.push(_react2.default.createElement(_Cell2.default, { row: rowIndex, cell: i, report: v, animated: animated, key: v.id, total: row.reports.length }));
+        cells.push(_react2.default.createElement(_CellResizeBar2.default, { row: rowIndex, cursor: cursor && i !== row.reports.length - 1, cell: i, key: -i - 1 }));
     });
-    return _react2.default.createElement(
+    return [_react2.default.createElement(
         'div',
-        { className: 'app-row' + (animated ? ' app-transition' : ''), style: { height: height, width: 'calc(100% - 10px)' } },
-        cells
-    );
+        { className: 'app-row' + (animated ? ' app-transition' : ''), style: { width: '100%', height: height }, key: rowIndex },
+        _react2.default.createElement(_CellResizeBar2.default, { row: rowIndex, cell: -1, key: 0 }),
+        _react2.default.createElement(
+            'div',
+            { className: 'app-row', style: { height: '100%', width: 'calc(100% - 10px)' }, key: -1 },
+            cells
+        )
+    )];
 };
 
 exports.default = Row;
@@ -28839,8 +28904,12 @@ var Cell = function (_Component) {
             var width = 'calc(' + (report.width === '*' ? 100 / total : report.width) + '% - ' + _RowResizeBar.RESIZE_BAR_SIZE + 'px)';
             return _react2.default.createElement(
                 'div',
-                { 'data-position': [row, cell - 1], 'data-is-report': true, className: 'app-cell' + (animated ? ' app-transition' : ''), style: { width: width } },
-                report.name,
+                { 'data-position': [row, cell], 'data-is-report': true, className: 'app-cell' + (animated ? ' app-transition' : ''), style: { width: width } },
+                _react2.default.createElement(
+                    'label',
+                    { className: 'title-label' },
+                    report.name
+                ),
                 _react2.default.createElement(
                     'button',
                     { onClick: this.deleteReport, className: 'delete-button' },
@@ -28876,9 +28945,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var CellResizeBar = function CellResizeBar(_ref) {
     var row = _ref.row,
-        cell = _ref.cell;
+        cell = _ref.cell,
+        cursor = _ref.cursor;
 
-    return _react2.default.createElement('div', { 'data-position': [row, cell], className: 'app-cell-resize-bar' });
+    return _react2.default.createElement('div', { 'data-position': [row, cell], className: 'app-cell-resize-bar' + (cursor ? ' app-cell-resize-cursor' : '') });
 };
 
 exports.default = CellResizeBar;
