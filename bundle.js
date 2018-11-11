@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8b1ad38a08e928c13c13"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8a482b51c166f57405a7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1094,32 +1094,16 @@ var setCurrentView = exports.setCurrentView = function setCurrentView(viewName) 
 };
 
 var addReport = exports.addReport = function addReport(name) {
-    return function (dispatch) {
-        dispatch({
-            type: 'ADD_REPORT_EMPTY_WIDTH',
-            payload: name
-        });
-        setTimeout(function () {
-            dispatch({
-                type: 'ADD_REPORT_FINAL',
-                payload: name
-            });
-        }, 0);
+    return {
+        type: 'ADD_REPORT',
+        payload: name
     };
 };
 
 var deleteReport = exports.deleteReport = function deleteReport(row, cell) {
-    return function (dispatch) {
-        dispatch({
-            type: 'DELETE_REPORT_EMPTY_WIDTH',
-            payload: [row, cell]
-        });
-        setTimeout(function () {
-            dispatch({
-                type: 'DELETE_REPORT_FINAL',
-                payload: [row, cell]
-            });
-        }, 150);
+    return {
+        type: 'DELETE_REPORT',
+        payload: [row, cell]
     };
 };
 
@@ -1753,7 +1737,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, ".app {\n    text-align: center;\n}\n\n.app-header {\n    display: flex;\n    flex-direction: row;\n    font-size: 0.8em;\n    height: 30px;\n}\n\n.app-main {\n    height: calc(100vh - 30px);\n    position: relative;\n    overflow: hidden;\n}\n\n.app-sub-main {\n    height: calc(100% - 10px);\n}\n\n.drag-rect {\n    pointer-events: none;\n    background-color: lightblue;\n    position: absolute;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.drag-target-rect {\n    pointer-events: none;\n    background-color: #3333ff;\n    position: absolute;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.delete-button {\n    float: right;\n    margin: 3px 3px 0 0;\n    font-size: 16px;\n    border: 1px solid transparent;\n    border-radius: 3px;\n    cursor: pointer;\n    background-color: transparent;\n    font-family: \"Arial\";\n}\n\n.title-label {\n    margin: 1px 0 0 7px;\n    float: left;\n    pointer-events: none;\n}\n\n.delete-button:focus {\n    outline: 0;\n}\n\n.delete-button:hover {\n    background-color: lightgrey;\n}\n\n.app-row {\n    display: flex;\n}\n\n.app-row-resize-bar {\n    height: 10px;\n    width: 100%;\n    padding: 0;\n}\n\n.app-row-resize-cursor {\n    cursor: ns-resize;\n}\n\n.app-cell {\n    background-color: #eee;\n    font-weight: 600;\n}\n\n.app-transition {\n    transition: all 0.15s linear;\n}\n\n.app-cell-resize-bar {\n    width: 10px;\n    height: 100%;\n}\n\n.app-cell-resize-cursor {\n    cursor: ew-resize;\n}\n\ndiv {\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    user-drag: none;\n\n    -webkit-user-select: none;\n    -khtml-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    user-select: none;\n}\n\nselect {\n    margin: 5px 5px 5px 2px;\n}\n\nlabel {\n    margin: 5px 2px 5px 5px;\n}", ""]);
+exports.push([module.i, ".app {\n    text-align: center;\n}\n\n.app-header {\n    display: flex;\n    flex-direction: row;\n    font-size: 0.8em;\n    height: 30px;\n}\n\n.app-main {\n    height: calc(100vh - 30px);\n    position: relative;\n    overflow: hidden;\n}\n\n.app-sub-main {\n    height: calc(100% - 10px);\n}\n\n.drag-rect {\n    pointer-events: none;\n    background-color: lightblue;\n    position: absolute;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.drag-target-rect {\n    pointer-events: none;\n    background-color: #3333ff;\n    position: absolute;\n    filter: alpha(opacity=50);\n    opacity: 0.5;\n}\n\n.delete-button {\n    float: right;\n    margin: 3px 3px 0 0;\n    font-size: 16px;\n    border: 1px solid transparent;\n    border-radius: 3px;\n    cursor: pointer;\n    background-color: transparent;\n    font-family: \"Arial\";\n}\n\n.title-label {\n    margin: 1px 0 0 7px;\n    float: left;\n    pointer-events: none;\n}\n\n.delete-button:focus {\n    outline: 0;\n}\n\n.delete-button:hover {\n    background-color: lightgrey;\n}\n\n.app-row {\n    display: flex;\n}\n\n.app-row-resize-bar {\n    height: 10px;\n    width: 100%;\n    padding: 0;\n}\n\n.app-row-resize-cursor {\n    cursor: ns-resize;\n}\n\n.app-cell {\n    background-color: #eee;\n    font-weight: 600;\n}\n\n.app-cell-resize-bar {\n    width: 10px;\n    height: 100%;\n}\n\n.app-cell-resize-cursor {\n    cursor: ew-resize;\n}\n\ndiv {\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    user-drag: none;\n\n    -webkit-user-select: none;\n    -khtml-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    user-select: none;\n}\n\nselect {\n    margin: 5px 5px 5px 2px;\n}\n\nlabel {\n    margin: 5px 2px 5px 5px;\n}", ""]);
 
 // exports
 
@@ -28556,7 +28540,7 @@ var Main = function (_Component) {
             var rows = [];
             var cursor = this.state.dragRect === null;
             this.props.layout.forEach(function (v, i) {
-                rows.push(_react2.default.createElement(_Row2.default, { row: v, rowIndex: i, animated: _this2.state.dragInfo === null, cursor: cursor, key: v.reports[0].id, total: _this2.props.layout.length }));
+                rows.push(_react2.default.createElement(_Row2.default, { row: v, rowIndex: i, cursor: cursor, key: v.reports[0].id, total: _this2.props.layout.length }));
                 rows.push(_react2.default.createElement(_RowResizeBar2.default, { row: i, cursor: cursor && i !== _this2.props.layout.length - 1, key: -i - 1 }));
             });
             var children = [_react2.default.createElement(_RowResizeBar2.default, { row: -1, key: 0 }), _react2.default.createElement(
@@ -28638,6 +28622,7 @@ var Main = function (_Component) {
                 var dragTargetInfo = Main.getDragTargetInfo(event);
                 var layout = JSON.parse(JSON.stringify(this.props.layout));
                 var report = layout[this.state.dragInfo.row].reports.splice(this.state.dragInfo.cell, 1)[0];
+                report.width = '*';
                 if (dragTargetInfo.cell === undefined) {
                     layout.forEach(function (v) {
                         return v.height = '*';
@@ -28817,19 +28802,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Row = function Row(_ref) {
     var row = _ref.row,
         rowIndex = _ref.rowIndex,
-        animated = _ref.animated,
         cursor = _ref.cursor,
         total = _ref.total;
 
     var height = 'calc(' + (row.height === '*' ? 100 / total : row.height) + '% - ' + _RowResizeBar.RESIZE_BAR_SIZE + 'px)';
     var cells = [];
     row.reports.forEach(function (v, i) {
-        cells.push(_react2.default.createElement(_Cell2.default, { row: rowIndex, cell: i, report: v, animated: animated, key: v.id, total: row.reports.length }));
+        cells.push(_react2.default.createElement(_Cell2.default, { row: rowIndex, cell: i, report: v, key: v.id, total: row.reports.length }));
         cells.push(_react2.default.createElement(_CellResizeBar2.default, { row: rowIndex, cursor: cursor && i !== row.reports.length - 1, cell: i, key: -i - 1 }));
     });
     return [_react2.default.createElement(
         'div',
-        { className: 'app-row' + (animated ? ' app-transition' : ''), style: { width: '100%', height: height }, key: rowIndex },
+        { className: 'app-row', style: { width: '100%', height: height }, key: rowIndex },
         _react2.default.createElement(_CellResizeBar2.default, { row: rowIndex, cell: -1, key: 0 }),
         _react2.default.createElement(
             'div',
@@ -28898,13 +28882,12 @@ var Cell = function (_Component) {
                 row = _props.row,
                 cell = _props.cell,
                 report = _props.report,
-                animated = _props.animated,
                 total = _props.total;
 
             var width = 'calc(' + (report.width === '*' ? 100 / total : report.width) + '% - ' + _RowResizeBar.RESIZE_BAR_SIZE + 'px)';
             return _react2.default.createElement(
                 'div',
-                { 'data-position': [row, cell], 'data-is-report': true, className: 'app-cell' + (animated ? ' app-transition' : ''), style: { width: width } },
+                { 'data-position': [row, cell], 'data-is-report': true, className: 'app-cell', style: { width: width } },
                 _react2.default.createElement(
                     'label',
                     { className: 'title-label' },
@@ -29221,54 +29204,54 @@ function main() {
         case 'SET_CURRENT_VIEW':
             return Object.assign({}, state, { currentView: action.payload });
         case 'SET_LAYOUT':
+            saveLayout(action.payload);
             return Object.assign({}, state, { layout: action.payload });
-        case 'ADD_REPORT_EMPTY_WIDTH':
+        case 'ADD_REPORT':
             var newState = JSON.parse(JSON.stringify(state));
             if (!newState.layout[0]) {
                 newState.layout.push({ height: '*', reports: [] });
             }
-            var width = 100 / newState.layout[0].reports.length;
-            newState.layout[0].reports.forEach(function (v) {
-                return v.width = width;
-            });
-            newState.layout[0].reports.push({ id: getNextId(newState.layout), name: action.payload, width: '0' });
-            return newState;
-        case 'ADD_REPORT_FINAL':
-            newState = JSON.parse(JSON.stringify(state));
+            newState.layout[0].reports.push({ id: getNextId(newState.layout), name: action.payload });
             newState.layout[0].reports.forEach(function (v) {
                 return v.width = '*';
             });
+            saveLayout(newState.layout);
             return newState;
-        case 'DELETE_REPORT_EMPTY_WIDTH':
+        case 'DELETE_REPORT':
             newState = JSON.parse(JSON.stringify(state));
             var reports = newState.layout[action.payload[0]].reports;
             if (reports.length === 1) {
-                newState.layout.forEach(function (v) {
-                    return v.height = 100 / (newState.layout.length - 1);
-                });
-                newState.layout[action.payload[0]].height = 0;
-            } else {
-                reports.forEach(function (v) {
-                    return v.width = 100 / (reports.length - 1);
-                });
-                reports[action.payload[1]].width = 0;
-            }
-            return newState;
-        case 'DELETE_REPORT_FINAL':
-            newState = JSON.parse(JSON.stringify(state));
-            reports = newState.layout[action.payload[0]].reports;
-            if (reports.length === 1) {
                 newState.layout.splice(action.payload[0], 1);
+                newState.layout.forEach(function (v) {
+                    return v.height = '*';
+                });
             } else {
+                reports.splice(action.payload[1], 1);
                 reports.forEach(function (v) {
                     return v.width = '*';
                 });
-                reports.splice(action.payload[1], 1);
             }
+            saveLayout(newState.layout);
             return newState;
         default:
             return state;
     }
+}
+
+function getInitialState() {
+    return {
+        currentView: '',
+        layout: loadLayout() || [{
+            height: '*',
+            reports: [{ id: 1, name: 'Delta', width: '*' }]
+        }, {
+            height: '*',
+            reports: [{ id: 2, name: 'Vega Grid', width: '*' }, { id: 3, name: 'Vega Summary', width: '*' }]
+        }, {
+            height: '*',
+            reports: [{ id: 4, name: 'Delta', width: '*' }, { id: 5, name: 'Vega Grid', width: '*' }, { id: 6, name: 'Vega Summary', width: '*' }]
+        }]
+    };
 }
 
 function getNextId(layout) {
@@ -29281,20 +29264,12 @@ function getNextId(layout) {
     return result;
 }
 
-function getInitialState() {
-    return {
-        currentView: '',
-        layout: [{
-            height: '*',
-            reports: [{ id: 1, name: 'Delta', width: '*' }, { id: 2, name: 'Vega Grid', width: '*' }]
-        }, {
-            height: '*',
-            reports: [{ id: 3, name: 'Vega Summary', width: '*' }, { id: 4, name: 'Vega Grid', width: '*' }, { id: 5, name: 'Vega Grid', width: '*' }, { id: 6, name: 'Vega Grid', width: '*' }]
-        }, {
-            height: '*',
-            reports: [{ id: 7, name: 'Delta', width: '*' }, { id: 8, name: 'Vega Grid', width: '*' }, { id: 9, name: 'Vega Summary', width: '*' }]
-        }]
-    };
+function saveLayout(layout) {
+    localStorage.setItem('layout', JSON.stringify(layout));
+}
+
+function loadLayout() {
+    return localStorage.getItem('layout') ? JSON.parse(localStorage.getItem('layout')) : null;
 }
 
 /***/ })
