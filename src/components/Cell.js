@@ -19,10 +19,8 @@ class Cell extends Component {
         let width = 'calc(' + (report.width === '*' ? 100 / total : report.width) + '% - ' + RESIZE_BAR_SIZE + 'px)';
         return (
             <div data-position={[row, cell]} data-is-report={true} className={'app-cell' + (animated ? ' app-transition' : '')} style={{width: width}}>
-                <div style={{padding: '2px 0 0 4px', pointerEvents: 'none'}}>
-                    <label>{report.name}</label>
-                    <button onClick={this.deleteReport} className="delete-button">x</button>
-                </div>
+                <label className="title-label">{report.name}</label>
+                <button onClick={this.deleteReport} className="delete-button">x</button>
             </div>
         );
     };

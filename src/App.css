@@ -37,13 +37,19 @@
 
 .delete-button {
     float: right;
-    margin: 2px 4px 0 0;
+    margin: 3px 3px 0 0;
     font-size: 16px;
     border: 1px solid transparent;
     border-radius: 3px;
     cursor: pointer;
     background-color: transparent;
     font-family: "Arial";
+}
+
+.title-label {
+    margin: 1px 0 0 7px;
+    float: left;
+    pointer-events: none;
 }
 
 .delete-button:focus {

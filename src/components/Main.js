@@ -103,7 +103,18 @@ class Main extends Component {
             return false;
         }
         if (this.state.dragRect) {
-            //todo this.moveReport(event.clientX, event.clientY);
+            let dragTargetInfo = Main.getDragTargetInfo(event);
+            let layout = JSON.parse(JSON.stringify(this.props.layout));
+            let report = layout[this.state.dragInfo.row].reports.splice(this.state.dragInfo.cell, 1)[0];
+            if (dragTargetInfo.cell === undefined) {
+                layout.forEach(v => v.height = '*');
+                layout.splice(dragTargetInfo.row + 1, 0, {height: '*', reports: [report]});
+            } else {
+                layout[dragTargetInfo.row].reports.forEach(v => v.width = '*');
+                layout[dragTargetInfo.row].reports.splice(dragTargetInfo.cell + 1, 0, report);
+            }
+            layout = layout.filter(v => v.reports.length !== 0);
+            this.props.setLayout(layout);
         }
         this.setState({dragInfo: null, dragRect: null, dragTargetRect: null});
         return false;
@@ -118,10 +129,11 @@ class Main extends Component {
         ];
     }
 
-    getDragTargetRect(event) {
+    static getDragTargetInfo(event) {
         let target = event.target;
+        let dragInfo = null;
         if (target.attributes['data-position']) {
-            let dragInfo = Main.parseDataPositionAttribute(target.attributes['data-position'].value);
+            dragInfo = Main.parseDataPositionAttribute(target.attributes['data-position'].value);
             if (target.attributes['data-is-report']) {
                 let x = event.clientX - target.offsetLeft;
                 let y = event.clientY - target.offsetTop;
@@ -143,6 +155,14 @@ class Main extends Component {
                     }
                 }
             }
+        }
+        return dragInfo;
+    }
+
+    getDragTargetRect(event) {
+        let target = event.target;
+        if (target.attributes['data-position']) {
+            let dragInfo = Main.getDragTargetInfo(event);
             if (dragInfo.cell === undefined) {
                 return [
                     RESIZE_BAR_SIZE,
